@@ -1,0 +1,73 @@
+{
+  "QuestionnaireStep": {
+    "BMR": "Métabolisme de base",
+    "PhysicalActivity": "Activité physique",
+    "CaloricDeficit": "Déficit calorique",
+    "NutrientDistribution": "Répartition des nutriments",
+    "Resume": "Résumé"
+  },
+  "Question": {
+    "Previous": "Précédent",
+    "Continue": "Continuer"
+  },
+  "BiologicSex": {
+    "Female": "Femme",
+    "Male": "Homme"
+  },
+  "BiologicSexRadio": {
+    "Gender": "Sexe biologique"
+  },
+  "BmrQuestion": {
+    "Weight": "Poids (kg)",
+    "Height": "Taille (cm)",
+    "Age": "Âge"
+  },
+  "Resume": {
+    "Title": "Résumé",
+    "BmrLabel": "Métabolisme de base",
+    "Bmr": "Au repos, votre corps consomme {bmr} Calories par jour",
+    "BmrTooltip": "Pour calculer le métabolisme de base, nous utilisons la formule de Mifflin St Jeor : <br/> - Homme : 10 * <b>Poids en kg</b> + 6.25 * <b>Taille en cm</b> - 5 * <b>Âge</b> + 5. <br/> - Femme : 10 * <b>Poids en kg</b> + 6.25 * <b>Taille en cm</b> - 5 * <b>Âge</b> - 116",
+
+    "TdeeLabel": "Apport énergétique total quotidien (AETQ)",
+    "Tdee": "En ajoutant à votre activité physique à votre métabolisme de base, votre consommation quotidienne est de {tdee} Calories/jour",
+    "TdeeTooltip": "L'apport énergétique total quotidien est calculé en multipliant votre métabolisme par un facteur: <br/> - Peu ou pas d'exercice : 1.2 <br/> - Légèrement actif : 1.375 <br/> - Modérément actif : 1.55 <br/> - Très actif : 1.725 <br/> - Extrêmement actif : 1.9",
+
+    "TdeeWithDeficitLabel": "AETQ avec déficit",
+    "TdeeWithDeficit": "En ajoutant le déficit calorique souhaité, la consommation journalière de calories doit être de {tdeeWithDeficit} Calories/jour",
+    "TdeeWithDeficitTooltip": "Pour calculer l'AETQ avec le déficit, il suffit d'enlever le pourcentage de déficit.",
+
+    "WeightLossLabel": "Masse grasse perdue par semaine",
+    "WeightLoss": "Ce déficit vous permettra de perdre environ {weightLoss} grammes par semaine de masse grasse. Attention, on ne parle pas ici du poids affiché sur la balance, mais bien du taux de masse graisseuse de votre corps.",
+    "WeightLossTooltip": "On dit qu'1 kilo de graisse corporelle représente environ 7700 Calories. Ainsi, en calculant les calories du déficit, on peut estimer la perte de poids par semaine. Cela représente bien sûr une estimation, et votre poids sur la balance est affecté par beaucoup plus que simplement votre taux de masse grasse.",
+
+    "NutrientDistributionLabel": "Répartition des nutriments",
+    "NutrientDistribution": "Vous devrez consommer : {carbohydrates} g de glucides, {proteins} g de protéines, {fat} g de lipides",
+    "NutrientDistributionTooltip": "Chaque nutriment a une conversion de gramme à Calories: <br/> - 1 g de glucides = 4 Cal <br/> - 1 g de protéines = 4 Cal <br/> - 1 g de lipides = 9 Cal",
+
+    "PhysicalInformation": "Rappel de vos informations physique",
+    "Weight": "Poids : {weight} kg",
+    "Height": "Taille : {height} cm",
+    "Age": "Âge : {age} ans",
+    "Sex": "Sexe biologique : {sex}"
+  },
+  "PhysicalActivity": {
+    "Sedentary": "Sédentaire",
+    "SedentaryDescription": "Peu ou pas d'exercice",
+    "SlightlyActive": "Légèrement actif",
+    "SlightlyActiveDescription": "1 à 3 jours par semaine",
+    "ModeratelyActive": "Modérément actif",
+    "ModeratelyActiveDescription": "3 à 5 jours par semaine",
+    "VeryActive": "Très actif",
+    "VeryActiveDescription": "6 à 7 jours par semaine",
+    "ExtremelyActive": "Extrêmement actif",
+    "ExtremelyActiveDescription": "Plus de 2 heures intensives par jour"
+  },
+  "CaloricDeficitQuestion": {
+    "WeightLoss": "Ce déficit représente environ {weightLoss} grammes de graisse corporelle perdue par semaine. Attention, un déficit trop important peut être dangereux pour la santé, nous recommandons de rester dans des tranches de 5 à 20% de AETQ"
+  },
+  "NutrientDistributionQuestion": {
+    "Carbohydrates": "Glucides (en %)",
+    "Fats": "Lipides (en %)",
+    "Proteins": "Protéines (en %)"
+  }
+}
