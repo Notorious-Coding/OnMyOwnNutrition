@@ -2,8 +2,9 @@ import { Box, Button, Typography } from "@mui/material";
 import { FormData, useForm } from "../../../../hooks/useForm.hook";
 import { useComponentScopedTranslation } from "../../../../providers/i18n.provider";
 import FormTextField from "../../../text-field/form-text-field";
-import { useNutrition } from "../../../../providers/nutrition.provider";
+import { useUserData } from "../../../../providers/userdata.provider";
 import { useEffect } from "react";
+import { Diet, diets } from "../../../../entities/diets";
 
 interface NutrientDistributionFormData {
   carbohydrates: FormData<number | null>;
@@ -45,58 +46,22 @@ function Validate(data: NutrientDistributionFormData) {
 
   return errors;
 }
-export interface Diet {
-  label: string;
-  carbohydrates: number;
-  proteins: number;
-  fats: number;
-}
 
 export default function NutrientDistributionQuestion() {
-  const diets: Diet[] = [
-    {
-      label: "Equilibré",
-      carbohydrates: 35,
-      proteins: 30,
-      fats: 35,
-    },
-    {
-      label: "Prise de masse",
-      carbohydrates: 50,
-      proteins: 40,
-      fats: 10,
-    },
-    {
-      label: "Cétogène",
-      carbohydrates: 10,
-      proteins: 40,
-      fats: 50,
-    },
-    {
-      label: "Hyperproteinés",
-      carbohydrates: 10,
-      proteins: 65,
-      fats: 25,
-    },
-    {
-      label: "Sportif de haut niveau",
-      carbohydrates: 50,
-      proteins: 30,
-      fats: 20,
-    },
-  ];
+  const { userData, set } = useUserData();
+
   const { data, errors, setData } = useForm<NutrientDistributionFormData, NutrientDistributionFormErrors>(
     {
       carbohydrates: {
-        value: diets[0].carbohydrates,
+        value: userData.carbohydratesInPercent,
         touched: false,
       },
       proteins: {
-        value: diets[0].proteins,
+        value: userData.proteinsInPercent,
         touched: false,
       },
       fats: {
-        value: diets[0].fats,
+        value: userData.fatsInPercent,
         touched: false,
       },
     },
@@ -104,19 +69,15 @@ export default function NutrientDistributionQuestion() {
   );
 
   const { t } = useComponentScopedTranslation(NutrientDistributionQuestion);
-  const { setCarbohydratesInPercent, setFatInPercent, setProteinsInPercent } = useNutrition();
 
   useEffect(() => {
-    if (data.carbohydrates.value != null) setCarbohydratesInPercent(data.carbohydrates.value);
-  }, [data.carbohydrates.value]);
-
-  useEffect(() => {
-    if (data.proteins.value != null) setProteinsInPercent(data.proteins.value);
-  }, [data.proteins.value]);
-
-  useEffect(() => {
-    if (data.fats.value != null) setFatInPercent(data.fats.value);
-  }, [data.fats.value]);
+    set({
+      ...userData,
+      fatsInPercent: data.fats.value,
+      carbohydratesInPercent: data.carbohydrates.value,
+      proteinsInPercent: data.proteins.value,
+    });
+  }, [data.carbohydrates.value, data.proteins.value, data.fats.value]);
 
   const applyDiet = (diet: Diet) => {
     setData({
@@ -136,6 +97,7 @@ export default function NutrientDistributionQuestion() {
   };
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Typography color="text.secondary">{t("Explanation")}</Typography>
       <Typography sx={{ fontSize: 15, mb: 4 }} color="error.main">
         {errors?.global}
       </Typography>
@@ -172,11 +134,14 @@ export default function NutrientDistributionQuestion() {
         }}
         label={t("Fats")}
       />
-
       <Typography variant="h5">Diètes préconfigurées</Typography>
       <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
         {diets.map((d) => {
-          return <Button onClick={() => applyDiet(d)}>{d.label}</Button>;
+          return (
+            <Button key={d.label} onClick={() => applyDiet(d)}>
+              {d.label}
+            </Button>
+          );
         })}
       </Box>
     </Box>

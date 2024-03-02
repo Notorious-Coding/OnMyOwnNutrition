@@ -1,11 +1,12 @@
 import { Badge, Box, Card, CardContent, Tooltip, Typography } from "@mui/material";
-import { useNutrition } from "../../../../providers/nutrition.provider";
+import { useUserData } from "../../../../providers/userdata.provider";
 import { useComponentScopedTranslation, useScopedTranslation } from "../../../../providers/i18n.provider";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import { QuestionnaireStep, useStepper } from "../../../../providers/step.provider";
 import { BiologicSex } from "../../../../entities/biologic-sex";
+import { Round } from "../../../../helpers/math.helper";
 export function Resume() {
-  const { tdeeWithDeficit, tdee, bmr, weightLoss, proteins, carbohydrates, fat, physicalInformation } = useNutrition();
+  const { userData } = useUserData();
   const { currentStep } = useStepper();
   const { t } = useComponentScopedTranslation(Resume);
   const { t: tSex } = useScopedTranslation("BiologicSex");
@@ -19,38 +20,52 @@ export function Resume() {
         {currentStep.key == QuestionnaireStep.Resume && (
           <Box sx={{ mb: 2 }}>
             <Typography sx={{ fontWeight: "bold" }}>{t("PhysicalInformation")}</Typography>
-            <Typography>{t("Weight", { weight: physicalInformation?.weight })}</Typography>
-            <Typography>{t("Height", { height: physicalInformation?.height })}</Typography>
-            <Typography>{t("Age", { age: physicalInformation?.age })}</Typography>
-            <Typography>{t("Sex", { sex: tSex(BiologicSex[physicalInformation!.sex]) })}</Typography>
+            <Typography sx={{ fontStyle: "italic" }}>{t("Weight", { weight: Round(userData.weight!, 2) })}</Typography>
+            <Typography sx={{ fontStyle: "italic" }}>{t("Height", { height: Round(userData.height!, 2) })}</Typography>
+            <Typography sx={{ fontStyle: "italic" }}>{t("Age", { age: userData.age })}</Typography>
+            <Typography sx={{ fontStyle: "italic" }}>{t("Sex", { sex: tSex(BiologicSex[userData.sex!]) })}</Typography>
           </Box>
         )}
-        {bmr && currentStep.key >= QuestionnaireStep.BMR && (
-          <ResumeSection tooltip={t("BmrTooltip", undefined, true)} label={t("BmrLabel")} description={t("Bmr", { ["bmr"]: bmr })} />
+
+        {userData.basalMetabolicRate && currentStep.key > QuestionnaireStep.BMR && (
+          <ResumeSection
+            tooltip={t("BmrTooltip", undefined, true)}
+            label={t("BmrLabel")}
+            description={t("Bmr", { ["bmr"]: Round(userData.basalMetabolicRate, 2) })}
+          />
         )}
-        {tdee && currentStep.key >= QuestionnaireStep.PhysicalActivity && (
-          <ResumeSection tooltip={t("TdeeTooltip", undefined, true)} label={t("TdeeLabel")} description={t("Tdee", { ["tdee"]: tdee })} />
+        {userData.totalDailyEnergyExpenditure && currentStep.key > QuestionnaireStep.PhysicalActivity && (
+          <ResumeSection
+            tooltip={t("TdeeTooltip", undefined, true)}
+            label={t("TdeeLabel")}
+            description={t("Tdee", { ["tdee"]: Round(userData.totalDailyEnergyExpenditure, 2) })}
+          />
         )}
-        {tdee && currentStep.key >= QuestionnaireStep.CaloricDeficit && (
+        {userData.tdeeWithDeficit && currentStep.key > QuestionnaireStep.CaloricDeficit && (
           <ResumeSection
             tooltip={t("TdeeWithDeficitTooltip", undefined, true)}
             label={t("TdeeWithDeficitLabel")}
-            description={t("TdeeWithDeficit", { ["tdeeWithDeficit"]: tdeeWithDeficit })}
-          />
-        )}
-        {weightLoss && currentStep.key >= QuestionnaireStep.CaloricDeficit && (
-          <ResumeSection
-            tooltip={t("WeightLossTooltip", undefined, true)}
-            label={t("WeightLossLabel")}
-            description={t("WeightLoss", { ["weightLoss"]: Math.abs(Math.round(weightLoss * 7 * 100) / 100) })}
+            description={t("TdeeWithDeficit", { ["tdeeWithDeficit"]: Round(userData.tdeeWithDeficit, 2) })}
           />
         )}
 
-        {currentStep.key >= QuestionnaireStep.NutrientDistribution && (
+        {userData.weightLoss && currentStep.key > QuestionnaireStep.CaloricDeficit && (
+          <ResumeSection
+            tooltip={t("WeightLossTooltip", undefined, true)}
+            label={t("WeightLossLabel")}
+            description={t("WeightLoss", { ["weightLoss"]: Math.abs(Math.round(userData.weightLoss! * 7 * 100) / 100) })}
+          />
+        )}
+
+        {currentStep.key > QuestionnaireStep.NutrientDistribution && (
           <ResumeSection
             tooltip={t("NutrientDistributionTooltip", undefined, true)}
             label={t("NutrientDistributionLabel")}
-            description={t("NutrientDistribution", { proteins, carbohydrates, fat })}
+            description={t("NutrientDistribution", {
+              proteins: Round(userData.proteins!, 2),
+              carbohydrates: Round(userData.carbohydrates!, 2),
+              fat: Round(userData.fats!, 2),
+            })}
           />
         )}
       </CardContent>

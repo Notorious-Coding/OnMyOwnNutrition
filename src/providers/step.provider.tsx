@@ -4,11 +4,12 @@ import { useScopedTranslation } from "./i18n.provider";
 
 export enum QuestionnaireStep {
   None = -1,
-  BMR = 0,
-  PhysicalActivity = 1,
-  CaloricDeficit = 2,
-  NutrientDistribution = 3,
-  Resume = 4,
+  Home = 0,
+  BMR = 1,
+  PhysicalActivity = 2,
+  CaloricDeficit = 3,
+  NutrientDistribution = 4,
+  Resume = 5,
 }
 
 interface IStepProvider {
@@ -25,6 +26,7 @@ interface IStepProvider {
 export interface Step {
   key: QuestionnaireStep;
   label: string;
+  subtitle?: string;
   isStepValid?: boolean;
 }
 export const StepContext = React.createContext<IStepProvider>({
@@ -41,6 +43,11 @@ export const StepContext = React.createContext<IStepProvider>({
 export default function StepProvider({ children }: HtmlProps) {
   const { t } = useScopedTranslation("QuestionnaireStep");
   const steps = [
+    {
+      key: QuestionnaireStep.Home,
+      label: t(QuestionnaireStep[QuestionnaireStep.Home]),
+      subtitle: t(QuestionnaireStep[QuestionnaireStep.Home] + "Subtitle"),
+    },
     {
       key: QuestionnaireStep.BMR,
       label: t(QuestionnaireStep[QuestionnaireStep.BMR]),

@@ -1,22 +1,25 @@
 import { Box, Slider, Typography } from "@mui/material";
 import { PhysicalActivity } from "../../../../entities/physical-activity";
-import { useScopedTranslation } from "../../../../providers/i18n.provider";
-import { useNutrition } from "../../../../providers/nutrition.provider";
+import { useComponentScopedTranslation, useScopedTranslation } from "../../../../providers/i18n.provider";
+import { useUserData } from "../../../../providers/userdata.provider";
 
 export default function PhysicalActivityQuestion() {
-  const { physicalActivity, setPhysicalActivity } = useNutrition();
-
+  const { userData, set } = useUserData();
+  const { t } = useComponentScopedTranslation(PhysicalActivityQuestion);
   return (
-    <Box sx={{ height: 300, mt: 4 }}>
+    <Box>
+      <Typography color="text.secondary">{t("Explanation")}</Typography>
       <Slider
         sx={{
           '& input[type="range"]': {
             WebkitAppearance: "slider-vertical",
           },
+          height: 300,
+          mt: 4,
         }}
-        onChange={(e, v) => setPhysicalActivity(v as number)}
+        onChange={(e, v) => set({ ...userData, physicalActivityLevel: v as number })}
         orientation="vertical"
-        value={physicalActivity}
+        value={userData.physicalActivityLevel}
         max={4}
         valueLabelDisplay="auto"
         size="medium"

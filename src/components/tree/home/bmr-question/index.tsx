@@ -1,12 +1,13 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import BiologicSexRadio from "../../../sex-radio";
 import { useComponentScopedTranslation } from "../../../../providers/i18n.provider";
-import { useNutrition } from "../../../../providers/nutrition.provider";
+import { useUserData } from "../../../../providers/userdata.provider";
 import { BiologicSex } from "../../../../entities/biologic-sex";
 import { useEffect } from "react";
 import { FormData, useForm } from "../../../../hooks/useForm.hook";
 import { useStepper } from "../../../../providers/step.provider";
 import FormTextField from "../../../text-field/form-text-field";
+import { UserData } from "../../../../api/omon/omon.client";
 
 interface BmrQuestionFormData {
   weight: FormData<number | null>;
@@ -36,33 +37,20 @@ function Validate(data: BmrQuestionFormData): BmrQuestionFormErrors {
 export default function BmrQuestion() {
   const { t } = useComponentScopedTranslation(BmrQuestion);
   const { setCurrentStepValidity } = useStepper();
-  const { setPhysicalInformation, physicalInformation } = useNutrition();
+  const { userData, set } = useUserData();
 
-  let formData: BmrQuestionFormData;
-
-  if (physicalInformation != null) {
-    formData = {
-      weight: { value: physicalInformation.weight, touched: false },
-      height: { value: physicalInformation.height, touched: false },
-      age: { value: physicalInformation.age, touched: false },
-      sex: { value: physicalInformation.sex, touched: false },
-    };
-  } else {
-    formData = {
-      weight: { value: null, touched: false },
-      height: { value: null, touched: false },
-      age: { value: null, touched: false },
-      sex: { value: BiologicSex.Male, touched: false },
-    };
-  }
+  let formData: BmrQuestionFormData = {
+    weight: { value: userData.height, touched: false },
+    height: { value: userData.weight, touched: false },
+    age: { value: userData.age, touched: false },
+    sex: { value: userData.sex == null ? BiologicSex.Male : userData.sex, touched: false },
+  };
 
   const { data, isFormValid, setData, errors } = useForm<BmrQuestionFormData, BmrQuestionFormErrors>(formData, Validate);
 
   useEffect(() => {
-    if (data.weight.value != null && data.height.value != null && data.age.value != null && data.sex.value != null) {
-      setPhysicalInformation({ weight: data.weight.value, height: data.height.value, age: data.age.value, sex: data.sex.value });
-    } else {
-      setPhysicalInformation(null);
+    if (data.weight.value != null && data.height.value != null && data.age.value != null) {
+      set({ ...userData, weight: data.weight.value, height: data.height.value, sex: data.sex.value, age: data.age.value });
     }
   }, [data]);
 
@@ -71,6 +59,7 @@ export default function BmrQuestion() {
   }, [isFormValid]);
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Typography color="text.secondary">{t("Explanation")}</Typography>
       <BiologicSexRadio value={data.sex.value} onChange={(v) => setData({ ...data, sex: { value: v, touched: true } })} />
       <FormTextField<number | null>
         type="number"

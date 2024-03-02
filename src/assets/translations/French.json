@@ -1,5 +1,7 @@
 {
   "QuestionnaireStep": {
+    "Home": "Informations",
+    "HomeSubtitle": "Bienvenue !",
     "BMR": "Métabolisme de base",
     "PhysicalActivity": "Activité physique",
     "CaloricDeficit": "Déficit calorique",
@@ -17,7 +19,12 @@
   "BiologicSexRadio": {
     "Gender": "Sexe biologique"
   },
+  "HomeQuestion": {
+    "Explanation": "Ce questionnaire te permettra de mieux comprendre tes besoins en termes nutritionnel afin que ton corps restent en bonne santé et te permettra de faciliter ta perte de poids. Entre ton adresse e-mail pour commencer !",
+    "Email": "Email"
+  },
   "BmrQuestion": {
+    "Explanation": "Le métabolisme de base correspond aux besoins énergétique de l'organisme au repos total, sans aucun mouvement.",
     "Weight": "Poids (kg)",
     "Height": "Taille (cm)",
     "Age": "Âge"
@@ -50,6 +57,9 @@
     "Age": "Âge : {age} ans",
     "Sex": "Sexe biologique : {sex}"
   },
+  "PhysicalActivityQuestion": {
+    "Explanation": "En estimant votre activité physique, on pourra calculer l'Apport Energétique Total Quotitien (AETQ). L'AETQ represente la dépense total de votre corps sur une journée."
+  },
   "PhysicalActivity": {
     "Sedentary": "Sédentaire",
     "SedentaryDescription": "Peu ou pas d'exercice",
@@ -63,9 +73,11 @@
     "ExtremelyActiveDescription": "Plus de 2 heures intensives par jour"
   },
   "CaloricDeficitQuestion": {
-    "WeightLoss": "Ce déficit représente environ {weightLoss} grammes de graisse corporelle perdue par semaine. Attention, un déficit trop important peut être dangereux pour la santé, nous recommandons de rester dans des tranches de 5 à 20% de AETQ"
+    "Explanation": "La perte de poids est un calcul mathématique simple, si l'énérgie dépensé est plus élévé que celle ingurgité, vous perdrez du poids. On appelle cela un déficit caloriques, c'est ici ce qu'on veux déterminer.",
+    "WeightLoss": "Un déficit calorique de {percentage}% représente environ {weightLoss} grammes de graisse corporelle perdue par semaine. Attention, un déficit trop important peut être dangereux pour la santé, nous recommandons de rester dans des tranches de 5 à 20%."
   },
   "NutrientDistributionQuestion": {
+    "Explanation": "Pour garder une bonne santé, il faut avoir un certain apport dans chacun des nutriments. Les glucides vous apportes de l'énérgie, les protéines permettent aux cellules de votre peau d'être en bonne santé, ainsi qu'a construire vos muscles, les lipides agissent sur de nombreuses réactions chimiques au sein du corps.",
     "Carbohydrates": "Glucides (en %)",
     "Fats": "Lipides (en %)",
     "Proteins": "Protéines (en %)"

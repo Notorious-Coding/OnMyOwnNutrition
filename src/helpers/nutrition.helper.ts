@@ -29,5 +29,5 @@ export function computeTdeeWithDeficit(tdee: number, deficitInPercent: number) {
 
 export function computeWeightLoss(tdeeWithDeficit: number, tdee: number) {
   const deficit: number = tdeeWithDeficit - tdee;
-  return Math.round((deficit / 7700) * 1000);
+  return Math.abs(Math.round((deficit / 7700) * 1000));
 }

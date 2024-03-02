@@ -1,15 +1,19 @@
 import { Box, Slider, Typography } from "@mui/material";
-import { useNutrition } from "../../../../providers/nutrition.provider";
+import { useUserData } from "../../../../providers/userdata.provider";
 import { useComponentScopedTranslation } from "../../../../providers/i18n.provider";
 
 export default function CaloricDeficitQuestion() {
-  const { caloricDeficit, setCaloricDeficit, weightLoss } = useNutrition();
+  const { userData, set } = useUserData();
   const { t } = useComponentScopedTranslation(CaloricDeficitQuestion);
   return (
-    <Box sx={{ mt: 4 }}>
+    <Box>
+      <Typography sx={{ mb: 4 }} color="text.secondary">
+        {t("Explanation")}
+      </Typography>
       <Slider
-        onChange={(e, v) => setCaloricDeficit(v as number)}
-        value={caloricDeficit}
+        sx={{ width: "90%" }}
+        onChange={(e, v) => set({ ...userData, caloricDeficitInPercent: v as number })}
+        value={userData.caloricDeficitInPercent}
         max={30}
         min={1}
         size="medium"
@@ -22,7 +26,9 @@ export default function CaloricDeficitQuestion() {
         ]}
       />
 
-      {weightLoss != null && <Typography>{t("WeightLoss", { weightLoss: weightLoss * 7 })}</Typography>}
+      {userData.weightLoss != null && (
+        <Typography>{t("WeightLoss", { percentage: userData.caloricDeficitInPercent, weightLoss: userData.weightLoss * 7 })}</Typography>
+      )}
     </Box>
   );
 }

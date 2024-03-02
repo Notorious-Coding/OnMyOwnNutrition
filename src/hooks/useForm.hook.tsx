@@ -11,7 +11,6 @@ export function useForm<TData, TErrors>(defaultValue: TData, validate: (data: TD
 
   useEffect(() => {
     const errors: any = validate(data);
-    console.log(errors);
     setErrors(errors);
     setIsFormValid(!hasErrors(errors));
   }, [data]);
